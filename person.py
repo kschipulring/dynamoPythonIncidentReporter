@@ -14,33 +14,28 @@ def get(id, attribs=[]):
     
     return r
 
-    
+
 #multiple people QUERY 
 def getQuery(attribs=[]):
     table = db_core.getMainTable()
     
     r = ""
     
+    #base attributes, always used
+    kwargs = {"IndexName": 'record_type-index', "KeyConditionExpression": Key('record_type').eq('person')}
+    
     #if we just want certain attributes returned from the DynamoDB table
     if len(attribs) > 0:
-
         #similar to Javascript string join
         projection_expression = ', '.join(attribs)
         
-        r = table.query(
-            IndexName='record_type-index',
-            KeyConditionExpression=Key('record_type').eq('person'),
-            Select= 'SPECIFIC_ATTRIBUTES',
-            ProjectionExpression= projection_expression
-        )
-    else:
-
-        #all attributes, no matter what
-        r = table.query(
-			IndexName='record_type-index',
-			KeyConditionExpression= Key('record_type').eq('person')
-		)
-
+        #add on to the kwargs
+        kwargs["Select"] = 'SPECIFIC_ATTRIBUTES'
+        kwargs["ProjectionExpression"] = projection_expression
+    
+    	
+    r = table.query(**kwargs)
+    
     #KeyConditionExpression=Key('person_id').eq('abc123') & Key('record_type').eq('institution')
     
     return r
