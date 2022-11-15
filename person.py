@@ -40,3 +40,25 @@ def getQuery(attribs=[]):
     
     return r
 
+
+#multiple people SCAN
+def getScan(attribs=[]):
+    table = db_core.getMainTable()
+    
+    r = ""	
+    
+    #base attributes, always used
+    kwargs = {"FilterExpression": Attr('record_type').eq("person")}
+    
+    #if we just want certain attributes returned from the DynamoDB table
+    if len(attribs) > 0:
+        #similar to Javascript string join
+        projection_expression = ', '.join(attribs)
+		
+        kwargs["Select"] = 'SPECIFIC_ATTRIBUTES'
+        kwargs["ProjectionExpression"] = projection_expression
+
+
+	r = table.query(**kwargs)
+    
+    return r
