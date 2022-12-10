@@ -58,7 +58,8 @@ class AbstractCoreController(ABC):
         
         return r
 
-    def getScan(record_type, attribs=[]):
+    # just get all records that fit the criteria, much like before. Just typically slower and more ham fisted
+    def getScan(self, attribs=[]):
         table = db_core.getMainTable()
 
         r = ""
@@ -68,7 +69,7 @@ class AbstractCoreController(ABC):
         
         #if we just want certain attributes returned from the DynamoDB table
         if len(attribs) > 0:
-            #similar to Javascript string join
+            #similar to JavaScript string join
             projection_expression = ', '.join(attribs)
 
             kwargs["Select"] = 'SPECIFIC_ATTRIBUTES'
