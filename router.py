@@ -1,9 +1,23 @@
 import json
 
-import person
-import role
-import incident
-import institution
+from controllers.Incident import Incident
+from controllers.Institution import Institution
+from controllers.Person import Person
+from controllers.Role import Role
+
+
+def getData(param_id, controller, key_condition_kwargs=None, attribs=[]):
+    outval = None
+    
+    #single, specific record
+    if param_id is not None:
+        outval = controller.get(param_id)
+    else:
+        #potentially many records
+        outval = controller.getQuery(key_condition_kwargs, attribs)
+        
+    return outval
+    
 
 #determine what the larger overall function shall do, based on the HTTP endpoint
 def route(event):
@@ -22,7 +36,7 @@ def route(event):
     
     #if this is a top level endpoint, then there is no meaningful param_id
     if not path_parameters:
-        param_id = ""
+        param_id = None
     else:
         #but if there is one
         param_id = path_parameters.get("proxy", "")
@@ -32,22 +46,18 @@ def route(event):
     if http_method == "GET":
     
         #now do the actual routing for the GET endpoints
-        if base_endpoint == 'getPerson':
-            outval = person.get(param_id)
-            
-        elif base_endpoint == "getRole":
+        if base_endpoint == "getRoles":
             outval = role.get(param_id)
             
-        elif base_endpoint == "getIncident":
+        elif base_endpoint == "getIncidents":
             outval = "call the getIncident function with " + param_id
          
-        elif base_endpoint == "getInstitution":
+        elif base_endpoint == "getInstitutions":
             outval = "call the getIncident function with " + param_id
             
         elif base_endpoint == "getPeople":
-            
-            #outval = person.getScan(["last_name", "first_name"])
-            outval = person.getQuery()
+
+            outval = getData(param_id, Person())
         else:
             outval = outval
     
