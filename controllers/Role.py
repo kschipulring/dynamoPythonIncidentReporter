@@ -1,6 +1,6 @@
 from controllers.AbstractCoreController import AbstractCoreController
 
-class Person(AbstractCoreController):
+class Role(AbstractCoreController):
 
     def __init__(self):
-        super().__init__("person")
+        super().__init__("role")

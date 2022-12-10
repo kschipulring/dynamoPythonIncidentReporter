@@ -47,16 +47,12 @@ def route(event):
     
         #now do the actual routing for the GET endpoints
         if base_endpoint == "getRoles":
-            outval = role.get(param_id)
-            
+            outval = getData(param_id, Role())
         elif base_endpoint == "getIncidents":
-            outval = "call the getIncident function with " + param_id
-         
+            outval = getData(param_id, Incident())
         elif base_endpoint == "getInstitutions":
-            outval = "call the getIncident function with " + param_id
-            
+            outval = getData(param_id, Institution())
         elif base_endpoint == "getPeople":
-
             outval = getData(param_id, Person())
         else:
             outval = outval
