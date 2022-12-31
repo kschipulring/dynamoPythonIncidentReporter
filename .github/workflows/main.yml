@@ -66,6 +66,7 @@ jobs:
             ${{ runner.os }}-
       - name: Install Node dependencies (specifically, serverless-python-requirements)
         run: npm install
+      - name: Build binary
         run: |
           zip -r deployment.zip master
       - name: default deploy
