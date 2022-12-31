@@ -66,6 +66,8 @@ jobs:
             ${{ runner.os }}-
       - name: Install Node dependencies (specifically, serverless-python-requirements)
         run: npm install
+        run: |
+          zip -r deployment.zip master
       - name: default deploy
         uses: appleboy/lambda-action@master
         with:
@@ -73,4 +75,4 @@ jobs:
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws_region: ${{ secrets.AWS_REGION }}
           function_name: dynamoPythonIncidentReporterDemo
-          source: lambda_function.py
+          zip_file: deployment.zip
