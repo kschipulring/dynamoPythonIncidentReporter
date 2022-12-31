@@ -68,7 +68,7 @@ jobs:
         run: npm install
       - name: Build binary
         run: |
-          zip -r deployment.zip master
+          zip -r deployment.zip
       - name: default deploy
         uses: appleboy/lambda-action@master
         with:
