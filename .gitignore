@@ -130,3 +130,6 @@ dmypy.json
 
 # Node.js dependencies
 node_modules
+
+*.zip
+package*.json

@@ -68,7 +68,7 @@ jobs:
         run: npm install
       - name: Build binary
         run: |
-          zip deployment.zip controllers ddb lambda_function.py router.py
+          zip -r deployment.zip . -x "node_modules" -x "node_modules/**" -x "*.git**" -x "*.github**" -x "package*.json"
       - name: default deploy
         uses: appleboy/lambda-action@master
         with:
